@@ -25,8 +25,10 @@ jobs:
         run: |
           curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
           unzip awscliv2.zip
-          sudo ./aws/install
-          aws --version
+          ./aws/install --bin-dir $HOME/.local/bin --install-dir $HOME/aws-cli
+          export PATH=$HOME/.local/bin:$PATH
+          aws --version  # Confirm AWS CLI installation
+      
 
       - name: Zip Lambda function
         run: zip -r function.zip .
