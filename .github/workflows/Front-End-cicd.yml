@@ -1,43 +1,19 @@
-name: Deploy Lambda to S3
+name: Debug Repository Structure
 
 on:
   push:
     branches:
-      - main  # Trigger workflow on push to the main branch
+      - main  # Trigger on pushes to the main branch
 
 jobs:
-  deploy:
+  debug:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out the code
+      # Step 1: Check out the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Configure AWS credentials
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v3
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1 
-
-      # Step 3: Zip the Lambda function
-      - name: Zip Lambda function
-        run: |
-          cd 1stAPI  # Navigate to the renamed folder
-          zip -r ../function.zip .  # Create a ZIP file in the repo's root
-
-      # Step 4: Upload ZIP file to S3
-      - name: Upload to S3
-        run: aws s3 cp ../function.zip s3://azizaws.com/lambda/function.zip
-
-      # Step 5: Update AWS Lambda Function
-      - name: Update AWS Lambda Function
-        run: |
-          aws lambda update-function-code \
-            --function-name CloudResumeTestAPI \
-            --region us-east-1 \
-            --s3-bucket azizaws.com \
-            --s3-key lambda/function.zip
-
+      # Step 2: Debug: List files and folders
+      - name: Debug: List repository contents
+        run: ls -R
