@@ -7,35 +7,19 @@ table = dynamodb.Table('CloudResumeTest')
 
 # Lambda handler function
 def handler(event, context):
-    try:
-        # Get the item from DynamoDB
-        response = table.get_item(Key={'id': '1'})
+    response = table.get_item(
+        key ={'id': '1'}
+    )
 
-        # Check if the item exists
-        if 'Item' in response:
-            views = response['Item'].get('views')  # Default to 0 if 'views' doesn't exist
-        else:
-            # Initialize the item if it doesn't exist
-            views = 0
-        
-        # Increment the views
-        views += 1
-        
-        # Update the item in DynamoDB
-        table.put_item(Item={
-            'id': '1',
-            'views': views
-        })
+    views = response['item']['views'] 
+    views += 1
+    print(views)
 
-        # Return a success response
-        return {
-            'statusCode': 200,
-            'body': json.dumps({'message': 'Views updated', 'views': views})
-        }
+    response = table.put_item(
+        key ={'id': '1',
+              'views': views}
 
-    except Exception as e:
-        # Return an error response
-        return {
-            'statusCode': 500,
-            'body': json.dumps({'error': str(e)})
-        }
+    )
+
+    return views
+
