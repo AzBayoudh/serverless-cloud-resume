@@ -8,15 +8,15 @@ table = dynamodb.Table('CloudResumeTest')
 # Lambda handler function
 def handler(event, context):
     response = table.get_item(
-        key ={'id': '1'}
+        Key ={'id': '1'}
     )
 
-    views = response['item']['views'] 
+    views = response['Item']['views'] 
     views += 1
     print(views)
 
     response = table.put_item(
-        key ={'id': '1',
+        Item ={'id': '1',
               'views': views}
 
     )
