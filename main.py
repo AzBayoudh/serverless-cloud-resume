@@ -22,8 +22,5 @@ def handler(event, context):
 
     )
 
-    return {
-        'sttatusCode': 500,
-        'body': json.dumps({'message': 'Views updated', 'views': views})
-    }
+    return views
 
