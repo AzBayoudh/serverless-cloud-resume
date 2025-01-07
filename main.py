@@ -7,6 +7,7 @@ table = dynamodb.Table('CloudResumeTest')
 
 # Lambda handler function
 def handler(event, context):
+    
     response = table.get_item(
         Key ={'id': '1'}
     )
@@ -21,5 +22,8 @@ def handler(event, context):
 
     )
 
-    return views
+    return {
+        'sttatusCode': 500,
+        'body': json.dumps({'message': 'Views updated', 'views': views})
+    }
 
