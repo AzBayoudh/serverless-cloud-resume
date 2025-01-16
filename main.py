@@ -22,5 +22,11 @@ def handler(event, context):
 
     )
 
-    return views
+    return {
+        "statusCode": 200,
+        "headers": {
+            "Content-Type": "text/plain",
+        },
+        "body":str(views)
+    }
 
