@@ -3,18 +3,18 @@ name: Deploy Lambda to S3
 on:
   push:
     branches:
-      - main  # Trigger workflow on push to the main branch
+      - main  # Trigger workflow on push to the main branch when pushed to main
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest #virtual ubuntu machine provided by github to run 
 
     steps:
-      # Step 1: Check out the code
+      # Step 1: pulls latest github code to the unbuntu vm 
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Configure AWS credentials
+      # Step 2: Authenticates GitHub Actions to interact with your AWS account using stored GitHub secrets.
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
